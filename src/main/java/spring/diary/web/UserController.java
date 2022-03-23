@@ -6,29 +6,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.slf4j.Slf4j;
 import spring.diary.domain.User;
-import spring.diary.domain.UserDto;
 import spring.diary.service.UserService;
 
-@Slf4j
 @RestController
 @RequestMapping("user")
 public class UserController {
 	@Autowired private UserService userService;
-	
+
 	@PostMapping("signin")
-	public boolean signin(@RequestBody UserDto userDto) {
-		return userService.authenticate(userDto.getEmail(), userDto.getPassword());
+	public User signin(@RequestBody User user) {		
+		return userService.authenticate(user.getEmail(), user.getPassword());
 	}
 	
 	@PostMapping("signup")
-	public void signup(@RequestBody UserDto userDto) {
-		User user = User.builder()
-				.userName(userDto.getUserName())
-				.email(userDto.getEmail())				
-				.password(userDto.getPassword())
-				.build();
+	public void signup(@RequestBody User user) {	
 		userService.register(user);
 	}
 }

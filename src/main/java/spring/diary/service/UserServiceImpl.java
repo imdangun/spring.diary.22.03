@@ -9,10 +9,13 @@ import spring.diary.domain.User;
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired private UserDao userDao;	
+	@Autowired private TokenProvider tokenProvider;	
 	
 	@Override
-	public boolean authenticate(String email, String password) {
-		return userDao.selectUser(email, password) != null;
+	public User authenticate(String email, String password) {				
+		User user = userDao.selectUser(email, password);
+		if(user != null) user.setToken(tokenProvider.createToken(user));
+		return user;		
 	}
 	
 	@Override
