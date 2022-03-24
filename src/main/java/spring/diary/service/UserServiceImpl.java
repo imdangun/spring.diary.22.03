@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User authenticate(String email, String password) {				
 		User user = userDao.selectUser(email, password);
-		if(user != null) user.setToken(tokenProvider.createToken(user));
+		if(user != null) user.setToken(tokenProvider.createToken(user.getUserId()));
 		return user;		
 	}
 	

@@ -4,18 +4,20 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
+import javax.crypto.SecretKey;
+
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import spring.diary.domain.User;
+import io.jsonwebtoken.security.Keys;
 
 @Service
-public class TokenProvider {
-	private static final String SECRET_KEY = "NMA8JPctFuna59f5";
+public class TokenProvider{	
+	private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 	
-	public String createToken(User user) {
+	public String createToken(String subject) {
 		// 만료기한 = 현재시각 + 1일
 		Date expiryDate = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
 		
@@ -33,20 +35,20 @@ public class TokenProvider {
 			Nn4d1MOVLZg79sfFACTIpCPKqWmpZMZQsbNrXdJJNWkRv50_l7bPLQPwhMobT4vBOG6Q3JYjhDrKFlBSaUxZOg
 		 */		
 		return Jwts.builder()
-				.signWith(SignatureAlgorithm.HS512, SECRET_KEY)
-				.setSubject(user.getUserId())
+				.signWith(key)
+				.setSubject(subject)
 				.setIssuer("diary")
 				.setIssuedAt(new Date())
 				.setExpiration(expiryDate)
 				.compact();
 	}
 	
-	public int validate(String token) {
+	public String validateToken(String token) {
 		Claims claims = Jwts.parser()
-				.setSigningKey(SECRET_KEY)
+				.setSigningKey(key)
 				.parseClaimsJws(token)
 				.getBody();
 		
-		return Integer.parseInt(claims.getSubject());
+		return claims.getSubject();
 	}
 }
