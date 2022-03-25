@@ -8,4 +8,8 @@ public class Todo {
 	private String title;
 	private boolean done;
 	private String userId; 
+	
+	public String toString() {
+		return String.format("%s %s %b %s", todoId, title, done, userId); 
+	}
 }

@@ -23,7 +23,8 @@ public class TodoDaoImpl implements TodoDao {
 	}
 	
 	@Override
-	public void insertTodo(Todo todo) {
+	public void insertTodo(Todo todo) {	
+		System.out.println(todo.getTodo)
 		todoMap.insertTodo(todo);
 	}
 	

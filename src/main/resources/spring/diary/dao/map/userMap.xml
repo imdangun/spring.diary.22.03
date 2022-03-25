@@ -5,7 +5,7 @@
 	<select id='selectUser' resultType='user'>
 		select user_id, user_name, email, password
 		from users
-		where email = #{email} and password = #{password}
+		where email = #{email}
 	</select>
 	
 	<insert id='insertUser'>

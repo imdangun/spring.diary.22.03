@@ -5,7 +5,7 @@
 	<select id='selectTodos' resultType='todo'>
 		select todo_id, title, done
 		from todos
-		where user_id = {userId}
+		where user_id = #{userId}
 		order by todo_id desc
 	</select>
 	

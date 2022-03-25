@@ -11,8 +11,8 @@ public class UserDaoImpl implements UserDao {
 	@Autowired private UserMap userMap;
 	
 	@Override
-	public User selectUser(String email, String password) {
-		return userMap.selectUser(email, password);
+	public User selectUser(String email) {
+		return userMap.selectUser(email);
 	}
 	
 	@Override
