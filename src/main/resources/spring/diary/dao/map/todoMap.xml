@@ -3,8 +3,9 @@
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='spring.diary.dao.map.TodoMap'>
 	<select id='selectTodos' resultType='todo'>
-		select todo_id, title, done, user_id
+		select todo_id, title, done
 		from todos
+		where user_id = {userId}
 		order by todo_id desc
 	</select>
 	

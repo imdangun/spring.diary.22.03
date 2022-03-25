@@ -13,8 +13,8 @@ public class DiaryServiceImpl implements DiaryService {
 	@Autowired private TodoDao todoDao;
 		
 	@Override
-	public List<Todo> getTodos() {
-		return todoDao.selectTodos();
+	public List<Todo> getTodos(String userId) {
+		return todoDao.selectTodos(userId);
 	}
 	
 	@Override

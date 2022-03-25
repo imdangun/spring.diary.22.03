@@ -3,6 +3,7 @@ package spring.diary.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,8 +23,8 @@ public class DiaryController {
 	@Autowired private DiaryService diaryService;
 	
 	@GetMapping("todos")
-	public List<Todo> getTodos() {
-		return diaryService.getTodos();
+	public List<Todo> getTodos(@AuthenticationPrincipal String userId) {
+		return diaryService.getTodos(userId);
 	}
 	
 	@GetMapping("todo")
@@ -32,12 +33,13 @@ public class DiaryController {
 	}
 	
 	@PostMapping("todo/add")
-	public void addTodo(@RequestBody Todo todo) {
+	public void addTodo(@RequestBody Todo todo, @AuthenticationPrincipal String userId) {
+		todo.setUserId(userId);
 		diaryService.addTodo(todo);
 	}
 	
 	@PatchMapping("todo/fix")
-	public void fixTodo(@RequestBody Todo todo) {
+	public void fixTodo(@RequestBody Todo todo) {		
 		diaryService.fixTodo(todo);
 	}
 	

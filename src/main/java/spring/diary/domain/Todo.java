@@ -1,8 +1,8 @@
 package spring.diary.domain;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class Todo {
 	private String todoId;
 	private String title;

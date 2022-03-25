@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import spring.diary.dao.UserDao;
 import spring.diary.domain.User;
+import spring.diary.security.TokenProvider;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -14,7 +15,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User authenticate(String email, String password) {				
 		User user = userDao.selectUser(email, password);
-		if(user != null) user.setToken(tokenProvider.createToken(user.getUserId()));
+		if(user != null) user.setToken(tokenProvider.getToken(user.getUserId()));
 		return user;		
 	}
 	

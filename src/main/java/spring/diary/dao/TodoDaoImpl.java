@@ -13,8 +13,8 @@ public class TodoDaoImpl implements TodoDao {
 	@Autowired private TodoMap todoMap;
 	
 	@Override
-	public List<Todo> selectTodos() {
-		return todoMap.selectTodos();
+	public List<Todo> selectTodos(String userId) {
+		return todoMap.selectTodos(userId);
 	}
 	
 	@Override
