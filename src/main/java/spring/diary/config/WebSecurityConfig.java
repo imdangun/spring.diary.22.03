@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
 			.csrf().disable()
 			.httpBasic().disable() // token을 사용하므로, basic 이 아니다.
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //세션 기반이 아니다.
-			.and().authorizeRequests().antMatchers("/", "/user/**").permitAll() // /와 /user 는 인증 안한다.
+			.and().authorizeRequests().antMatchers("/", "/user/**", "/diary/**").permitAll() // /와 /user 는 인증 안한다.
 			.anyRequest().authenticated(); // /와 /user 외에는 인증해야 한다.
 		
 		// request마다 CorsFilter, jwtAuthenticationFilter 순으로 실행한다.
