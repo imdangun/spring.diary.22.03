@@ -16,8 +16,8 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class TokenProvider{	
 	private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-	
-	public String getToken(String subject) {
+		
+	public String getToken(String subject) {		 
 		// 만료기한 = 현재시각 + 1일
 		Date expiryDate = Date.from(Instant.now().plus(1, ChronoUnit.DAYS));
 		String token = Jwts.builder()
@@ -45,12 +45,11 @@ public class TokenProvider{
 	}
 	
 	// user_id 를 subject 으로 사용한다.
-	public String getSubject(String token) {
+	public String getSubject(String token) {		
 		Claims claims = Jwts.parser()
 				.setSigningKey(key)
 				.parseClaimsJws(token)
-				.getBody();
-		
+				.getBody();		
 		return claims.getSubject();
 	}
 }

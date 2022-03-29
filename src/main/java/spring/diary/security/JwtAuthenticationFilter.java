@@ -30,12 +30,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		try {
-			log.info("인증을 시작합니다.");
-			String token = parseToken(request);
-			if(token != null && !token.equalsIgnoreCase("null")) {
-				String userId = tokenProvider.getSubject(token);
-				log.info("userId: " + userId);
-				
+			log.info("인증 시작.");
+			String token = parseToken(request);			
+			if(token != null) {
+				String userId = tokenProvider.getSubject(token);				
 				AbstractAuthenticationToken  authentication 
 					= new UsernamePasswordAuthenticationToken(
 							userId, null, AuthorityUtils.NO_AUTHORITIES);
@@ -44,18 +42,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				securityContext.setAuthentication(authentication);
 				SecurityContextHolder.setContext(securityContext);				
 			}
-			log.info("인증을 마칩니다.");
+			log.info("인증 성공.");
 		} catch(Exception e) {
-			logger.error("인증이 실패했습니다.", e);
+			logger.error("인증 실패.", e);
 		}
 		filterChain.doFilter(request, response);
 	}
 	
 	private String parseToken(HttpServletRequest request) {
 		String token = request.getHeader("Authorization");
-		
 		String result = null;
-		if(StringUtils.hasText(token) && token.startsWith("Bearer"))
+		if(StringUtils.hasText(token) && token.startsWith("Bearer "))
 			result = token.substring(7);
 		
 		return result;
